@@ -1,0 +1,55 @@
+stages:
+  - build
+  - test
+  - push
+  - deploy
+
+build_phase:
+  stage: build
+  script:
+  - docker build -t node-app:latest .stages:
+  - build
+  - test
+  - push
+  - deploy
+
+build_phase:
+  stage: build
+  script:
+    - docker build -t node-app:latest .
+
+test_phase:
+  stage: test
+  script:
+    - echo "Pipeline is working"
+
+push_phase:
+  stage: push
+  script:
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    - docker tag node-app:latest $DOCKER_USERNAME/todo-node-app:latest
+    - docker push $DOCKER_USERNAME/todo-node-app:latest
+
+deploy_phase:
+  stage: deploy
+  script:
+    - docker-compose up -d
+
+
+test_phase:
+  stage: test
+  script:
+    - echo "Pipeline is working"
+
+push_phase:
+  stage: push
+  script:
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    - docker push username/todo-node-app:latest
+
+deploy_phase:
+  stage: deploy
+  script:
+    - docker-compose up -d
+
+
